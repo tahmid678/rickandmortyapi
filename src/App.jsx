@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MainComponent from './components/MainComponent';
+import { connect } from 'react-redux';
+import { getCharacters } from './redux/Reducer';
 
-function App() {
+const mapStateToProps = state => {
+  return {
+    characters: state.characters
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch: dispatch
+  }
+}
+
+function App(props) {
+
+  useEffect(() => {
+    getCharacters(props.dispatch);
+  }, [])
+
+  console.log(props.characters);
+
   return (
     <div>
       <MainComponent />
@@ -9,4 +30,4 @@ function App() {
   )
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
